@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PARTHSATTA | ASIA'S #1 TRUSTED PLATFORM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --brand-red: #ff3131; --brand-gold: #ffd700; --bg: #000; --glass: rgba(255, 255, 255, 0.05); }
+        body { background: var(--bg); color: #fff; font-family: sans-serif; margin: 0; padding-bottom: 90px; }
+        header { background: linear-gradient(to bottom, #1a0000, #000); padding: 30px 15px; text-align: center; border-bottom: 2px solid var(--brand-red); }
+        .logo-text { font-size: 32px; font-weight: 900; color: #fff; text-shadow: 0 0 15px var(--brand-red); letter-spacing: 5px; }
+        .tg-bar { background: #0088cc; color: #fff; padding: 12px; text-align: center; font-weight: bold; text-decoration: none; display: block; }
+        .rate-card { margin: 20px; background: var(--glass); border: 1px solid var(--brand-gold); border-radius: 15px; padding: 25px; text-align: center; }
+        .rate-val { font-size: 35px; font-weight: 900; color: var(--brand-gold); display: block; }
+        .booking-form { background: #111; margin: 15px; padding: 20px; border-radius: 15px; border: 1px solid #333; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; background: #000; border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; }
+        .btn-play { width: 100%; padding: 15px; background: var(--brand-red); color: #fff; border: none; border-radius: 8px; font-weight: 900; font-size: 18px; cursor: pointer; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
+        .card { background: #080808; border: 1px solid #222; border-radius: 12px; padding: 20px 5px; text-align: center; border-left: 4px solid var(--brand-red); }
+        .nav { position: fixed; bottom: 0; width: 100%; background: #000; display: flex; justify-content: space-around; padding: 15px 0; border-top: 2px solid var(--brand-red); z-index: 1000; }
+        .nav-link { color: #555; text-decoration: none; font-size: 10px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<a href="https://t.me/your_telegram" class="tg-bar"><i class="fab fa-telegram-plane"></i> JOIN OFFICIAL TELEGRAM (सबसे तेज़ अपडेट)</a>
+
+<header>
+    <div class="logo-text">PARTHSATTA</div>
+    <div style="font-size:10px; color:var(--brand-gold); font-weight:bold;">ASIA'S #1 TRUSTED PLATFORM</div>
+</header>
+
+<marquee style="background:var(--brand-red); color:#fff; padding:10px; font-weight:900;">🔥 रोहित भाई ने गली में ₹95,000 जीते! 🔥 ₹100 के ₹9500 का सबसे तेज़ पेमेंट! 🔥 भरोसे का दूसरा नाम - PARTHSATTA 🔥</marquee>
+
+<div class="rate-card">
+    <span style="font-size:15px; color:#aaa;">EXCLUSIVE PAYOUT RATE</span>
+    <span class="rate-val">₹10 के ₹950</span>
+    <span style="color:#39ff14; font-weight:bold;">यानी ₹100 के ₹9500 (LIVE NOW)</span>
+</div>
+
+<div class="booking-form">
+    <h3 style="color:var(--brand-red); margin-top:0;">🎰 ONLINE BOOKING (सीधे एडमिन को भेजें)</h3>
+    <input type="text" id="uN" placeholder="आपका नाम">
+    <input type="number" id="uP" placeholder="WhatsApp नंबर (पेमेंट के लिए)">
+    <select id="mN">
+        <option value="GALI">GALI</option><option value="DESAWAR">DESAWAR</option>
+        <option value="FARIDABAD">FARIDABAD</option><option value="GHAZIABAD">GHAZIABAD</option>
+    </select>
+    <input type="number" id="bN" placeholder="नंबर (00-99)">
+    <input type="number" id="bA" placeholder="अमाउंट (₹)">
+    <button class="btn-play" onclick="bookGame()">CONFIRM & PLAY</button>
+</div>
+
+<h3 style="padding:0 15px; color:var(--brand-red);">🔴 LIVE RESULTS (लाइव रिज़ल्ट)</h3>
+<div class="grid" id="m-grid"></div>
+
+<div class="nav">
+    <a href="#" class="nav-link" style="color:red;"><i class="fa-solid fa-fire"></i><br>LIVE</a>
+    <a href="https://wa.me/918979382308" class="nav-link"><i class="fa-brands fa-whatsapp"></i><br>WHATSAPP</a>
+    <a href="admin.html" class="nav-link"><i class="fa-solid fa-user-lock"></i><br>ADMIN</a>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyBkeZInbo-rTkLPuZFdfyhr7oR03wy7_q8",
+        authDomain: "parthsatta.firebaseapp.com",
+        projectId: "parthsatta",
+        storageBucket: "parthsatta.firebasestorage.app",
+        messagingSenderId: "975713705925",
+        appId: "1:975713705925:web:fe0ff21f439e47f484b5ac"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Results Fetch
+    db.collection("results").onSnapshot(ss => {
+        const g = document.getElementById('m-grid'); g.innerHTML = '';
+        ss.forEach(doc => {
+            g.innerHTML += `<div class="card"><span>${doc.id}</span><br><span style="font-size:40px; font-weight:900;">${doc.data().num}</span><br><span style="font-size:9px; color:red;">RESULT DECLARED</span></div>`;
+        });
+    });
+
+    async function bookGame() {
+        const n=document.getElementById('uN').value, p=document.getElementById('uP').value, m=document.getElementById('mN').value, num=document.getElementById('bN').value, a=document.getElementById('bA').value;
+        if(!n || !p || !num || !a) return alert("भाई, पूरी डिटेल भरो!");
+        await db.collection("bookings").add({ n, p, m, num, a:parseInt(a), win: a*95, t:new Date().toLocaleString() });
+        alert("✅ गेम लग गया है! एडमिन पैनल पर चेक करें।");
+    }
+</script>
+</body>
+</html>

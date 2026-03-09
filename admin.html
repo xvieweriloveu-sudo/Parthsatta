@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MASTER ADMIN | PARTHSATTA</title>
+    <style>
+        body { background: #000; color: #fff; font-family: sans-serif; padding: 15px; }
+        .cyber-card { background: #0d0d0d; border-top: 4px solid #ff3131; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        th, td { border: 1px solid #222; padding: 10px; text-align: left; }
+        th { color: #ff3131; background: #000; }
+        input { padding: 12px; background: #000; border: 1px solid #333; color: #39ff14; width: 80%; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h2 style="color:#ff3131; text-align:center;">MASTER CONTROL & RISK</h2>
+
+    <div class="cyber-card">
+        <h3>TOTAL COLLECTION: <span id="totalC" style="color:#39ff14;">₹ 0</span></h3>
+    </div>
+
+    <div class="cyber-card">
+        <h3><i class="fa-solid fa-pen"></i> UPDATE LIVE RESULT</h3>
+        <input type="text" id="mkt" placeholder="Market Name (e.g. GALI)"><br>
+        <input type="number" id="res" placeholder="Number (00-99)"><br>
+        <button onclick="upd()" style="width:85%; padding:15px; background:#ff3131; color:#fff; border:none; font-weight:bold;">PUSH LIVE NOW</button>
+    </div>
+
+    <div class="cyber-card">
+        <h3>LIVE BOOKINGS (Kisine Kya Lagaya)</h3>
+        <table id="t">
+            <thead><tr><th>Time</th><th>User</th><th>WA No.</th><th>Market</th><th>Num</th><th>Amt</th><th>Win(95x)</th></tr></thead>
+            <tbody id="rows"></tbody>
+        </table>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBkeZInbo-rTkLPuZFdfyhr7oR03wy7_q8",
+            authDomain: "parthsatta.firebaseapp.com",
+            projectId: "parthsatta",
+            storageBucket: "parthsatta.firebasestorage.app",
+            messagingSenderId: "975713705925",
+            appId: "1:975713705925:web:fe0ff21f439e47f484b5ac"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        db.collection("bookings").orderBy("t", "desc").onSnapshot(ss => {
+            let total = 0; const r = document.getElementById('rows'); r.innerHTML = '';
+            ss.forEach(doc => {
+                const d = doc.data(); total += d.a;
+                r.innerHTML += `<tr><td>${d.t}</td><td>${d.n}</td><td>${d.p}</td><td>${d.m}</td><td style="font-weight:900; font-size:16px;">${d.num}</td><td>₹${d.a}</td><td style="color:#39ff14; font-weight:bold;">₹${d.win}</td></tr>`;
+            });
+            document.getElementById('totalC').innerText = "₹ " + total;
+        });
+
+        function upd() {
+            const m=document.getElementById('mkt').value.toUpperCase(), r=document.getElementById('res').value;
+            if(!m || !r) return alert("Detail bharo!");
+            db.collection("results").doc(m).set({ num: r }).then(() => alert("Result Updated Live!"));
+        }
+    </script>
+</body>
+</html>
