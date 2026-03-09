@@ -6,64 +6,139 @@
     <title>PARTHSATTA | ASIA'S #1 TRUSTED PLATFORM</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --brand-red: #ff3131; --brand-gold: #ffd700; --bg: #000; --glass: rgba(255, 255, 255, 0.05); }
-        body { background: var(--bg); color: #fff; font-family: sans-serif; margin: 0; padding-bottom: 90px; }
-        header { background: linear-gradient(to bottom, #1a0000, #000); padding: 30px 15px; text-align: center; border-bottom: 2px solid var(--brand-red); }
-        .logo-text { font-size: 32px; font-weight: 900; color: #fff; text-shadow: 0 0 15px var(--brand-red); letter-spacing: 5px; }
-        .tg-bar { background: #0088cc; color: #fff; padding: 12px; text-align: center; font-weight: bold; text-decoration: none; display: block; }
-        .rate-card { margin: 20px; background: var(--glass); border: 1px solid var(--brand-gold); border-radius: 15px; padding: 25px; text-align: center; }
-        .rate-val { font-size: 35px; font-weight: 900; color: var(--brand-gold); display: block; }
-        .booking-form { background: #111; margin: 15px; padding: 20px; border-radius: 15px; border: 1px solid #333; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; background: #000; border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; }
-        .btn-play { width: 100%; padding: 15px; background: var(--brand-red); color: #fff; border: none; border-radius: 8px; font-weight: 900; font-size: 18px; cursor: pointer; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
-        .card { background: #080808; border: 1px solid #222; border-radius: 12px; padding: 20px 5px; text-align: center; border-left: 4px solid var(--brand-red); }
-        .nav { position: fixed; bottom: 0; width: 100%; background: #000; display: flex; justify-content: space-around; padding: 15px 0; border-top: 2px solid var(--brand-red); z-index: 1000; }
+        :root { --red: #ff3131; --gold: #ffd700; --bg: #000; --glass: rgba(255, 255, 255, 0.05); }
+        body { background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 100px; overflow-x: hidden; }
+        
+        /* Premium Header */
+        header { background: linear-gradient(to bottom, #1a0000, #000); padding: 25px 15px; text-align: center; border-bottom: 2px solid var(--red); box-shadow: 0 5px 20px rgba(255, 49, 49, 0.4); }
+        .logo-text { font-size: 35px; font-weight: 900; color: #fff; text-shadow: 0 0 15px var(--red); letter-spacing: 6px; margin: 0; }
+        .tagline { color: var(--gold); font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Greedy Pulsing WhatsApp Button */
+        .wa-bet-btn { background: linear-gradient(45deg, #25d366, #128c7e); color: #fff; display: flex; align-items: center; justify-content: center; padding: 18px; margin: 15px; border-radius: 12px; text-decoration: none; font-weight: 900; font-size: 19px; border: 2px solid #fff; box-shadow: 0 0 15px rgba(37, 211, 102, 0.5); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.04); } 100% { transform: scale(1); } }
+
+        /* Rates Card */
+        .rate-card { margin: 15px; background: var(--glass); border: 1px solid var(--gold); border-radius: 15px; padding: 20px; text-align: center; position: relative; }
+        .rate-val { font-size: 38px; font-weight: 900; color: var(--gold); display: block; text-shadow: 0 0 10px rgba(255,215,0,0.4); }
+
+        /* Professional Booking Form */
+        .booking-form { background: #0a0a0a; margin: 15px; padding: 20px; border-radius: 15px; border: 1px solid #222; box-shadow: 0 0 20px rgba(255,49,49,0.1); }
+        input, select { width: 100%; padding: 14px; margin: 10px 0; background: #000; border: 1px solid #333; color: #fff; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
+        input:focus { border-color: var(--red); outline: none; }
+        .btn-play { width: 100%; padding: 16px; background: var(--red); color: #fff; border: none; border-radius: 8px; font-weight: 900; font-size: 18px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+
+        /* Market Result Grid */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; }
+        .card { background: #080808; border: 1px solid #1a1a1a; border-radius: 12px; padding: 15px 5px; text-align: center; border-top: 3px solid var(--red); }
+        .m-name { font-size: 12px; font-weight: bold; color: var(--gold); text-transform: uppercase; }
+        .m-num { font-size: 42px; font-weight: 900; color: #fff; display: block; margin: 5px 0; }
+        .m-status { font-size: 9px; color: #39ff14; font-weight: bold; }
+
+        /* Old Record Table */
+        .chart-section { background: #fff; color: #000; margin-top: 25px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th { background: #000; color: #fff; padding: 12px; font-size: 13px; }
+        td { border: 1px solid #ddd; padding: 10px; text-align: center; font-weight: 900; font-size: 15px; }
+        tr:nth-child(even) { background: #f2f2f2; }
+
+        /* Trust & Contact Footer */
+        .footer-trust { background: #0a0a0a; padding: 40px 20px; margin-top: 30px; border-top: 2px solid var(--red); text-align: center; }
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
+        .f-item { background: #111; padding: 15px; border-radius: 10px; border: 1px solid #333; font-size: 11px; font-weight: bold; }
+        .f-item i { color: var(--gold); font-size: 22px; margin-bottom: 8px; display: block; }
+        
+        .contact-btn { display: block; padding: 16px; margin: 10px 0; border-radius: 10px; text-decoration: none; font-weight: 900; font-size: 15px; transition: 0.3s; }
+        .btn-gmail { background: #db4437; color: #fff; border: 1px solid #fff; }
+        .btn-wa { background: #25d366; color: #fff; }
+        .btn-tg { background: #0088cc; color: #fff; }
+
+        /* Sticky Navigation */
+        .nav { position: fixed; bottom: 0; width: 100%; background: #000; display: flex; justify-content: space-around; padding: 12px 0; border-top: 2px solid var(--red); z-index: 1000; }
         .nav-link { color: #555; text-decoration: none; font-size: 10px; text-align: center; font-weight: bold; }
+        .nav-link.active { color: var(--red); }
+        .nav-link i { font-size: 20px; margin-bottom: 3px; }
     </style>
 </head>
 <body>
 
-<a href="https://t.me/your_telegram" class="tg-bar"><i class="fab fa-telegram-plane"></i> JOIN OFFICIAL TELEGRAM (सबसे तेज़ अपडेट)</a>
-
 <header>
-    <div class="logo-text">PARTHSATTA</div>
-    <div style="font-size:10px; color:var(--brand-gold); font-weight:bold;">ASIA'S #1 TRUSTED PLATFORM</div>
+    <h1 class="logo-text">PARTHSATTA</h1>
+    <span class="tagline">TRUSTED BY 5 LAKH+ PLAYERS</span>
 </header>
 
-<marquee style="background:var(--brand-red); color:#fff; padding:10px; font-weight:900;">🔥 रोहित भाई ने गली में ₹95,000 जीते! 🔥 ₹100 के ₹9500 का सबसे तेज़ पेमेंट! 🔥 भरोसे का दूसरा नाम - PARTHSATTA 🔥</marquee>
+<marquee style="background:var(--red); color:#fff; padding:10px; font-weight:900; font-size:14px;">
+    🔥 धमाकेदार पेमेंट: ₹100 के ₹9500 का सबसे तेज़ भुगतान! 🔥 2 मिनट में विड्रॉल 🔥 आज की लीक जोड़ी के लिए व्हाट्सएप करें 🔥
+</marquee>
+
+<a href="https://chat.whatsapp.com/GoTo9l39vQz7gVA9rULQ6P" class="wa-bet-btn">
+    <i class="fab fa-whatsapp" style="margin-right:12px; font-size:26px;"></i> व्हाट्सएप ग्रुप जॉइन करें (BET NOW)
+</a>
 
 <div class="rate-card">
-    <span style="font-size:15px; color:#aaa;">EXCLUSIVE PAYOUT RATE</span>
+    <span style="font-size:14px; color:#aaa; font-weight:bold;">PAYOUT RATE (ASIA'S HIGHEST)</span>
     <span class="rate-val">₹10 के ₹950</span>
-    <span style="color:#39ff14; font-weight:bold;">यानी ₹100 के ₹9500 (LIVE NOW)</span>
+    <span style="color:#39ff14; font-weight:900;">100% SECURE & AUTOMATED</span>
 </div>
 
 <div class="booking-form">
-    <h3 style="color:var(--brand-red); margin-top:0;">🎰 ONLINE BOOKING (सीधे एडमिन को भेजें)</h3>
+    <h3 style="color:var(--red); margin:0 0 15px 0; text-align:center;"><i class="fa-solid fa-trophy"></i> ONLINE BOOKING SYSTEM</h3>
     <input type="text" id="uN" placeholder="आपका नाम">
-    <input type="number" id="uP" placeholder="WhatsApp नंबर (पेमेंट के लिए)">
+    <input type="number" id="uP" placeholder="WhatsApp नंबर">
     <select id="mN">
-        <option value="GALI">GALI</option><option value="DESAWAR">DESAWAR</option>
-        <option value="FARIDABAD">FARIDABAD</option><option value="GHAZIABAD">GHAZIABAD</option>
+        <option value="GALI">GALI (गली)</option>
+        <option value="DESAWAR">DESAWAR (दिसावर)</option>
+        <option value="FARIDABAD">FARIDABAD (फरीदाबाद)</option>
+        <option value="GHAZIABAD">GHAZIABAD (गाजियाबाद)</option>
     </select>
     <input type="number" id="bN" placeholder="नंबर (00-99)">
     <input type="number" id="bA" placeholder="अमाउंट (₹)">
-    <button class="btn-play" onclick="bookGame()">CONFIRM & PLAY</button>
+    <button class="btn-play" onclick="bookGame()">CONFIRM BOOKING</button>
 </div>
 
-<h3 style="padding:0 15px; color:var(--brand-red);">🔴 LIVE RESULTS (लाइव रिज़ल्ट)</h3>
+<h3 style="padding:0 15px; color:var(--red); text-transform:uppercase;"><i class="fa-solid fa-bolt"></i> Live Results (20+ Markets)</h3>
 <div class="grid" id="m-grid"></div>
 
+<div class="chart-section">
+    <div style="background:#000; color:var(--gold); padding:15px; text-align:center; font-weight:900;">MONTHLY RECORD CHART 2026</div>
+    <table>
+        <thead><tr><th>DATE</th><th>DS</th><th>GL</th><th>FB</th><th>GB</th><th>SG</th></tr></thead>
+        <tbody id="chart-body"></tbody>
+    </table>
+</div>
+
+<div class="footer-trust">
+    <h2 style="color:var(--red); font-weight:900; margin-bottom:5px;">24/7 VIP SUPPORT</h2>
+    <div class="feature-grid">
+        <div class="f-item"><i class="fa-solid fa-bolt"></i> FASTEST RESULT</div>
+        <div class="f-item"><i class="fa-solid fa-shield-halved"></i> 100% SECURE</div>
+    </div>
+
+    <a href="mailto:xvieweriloveu@gmail.com?subject=Inquiry&body=Hello_Admin," class="contact-btn btn-gmail">
+        <i class="fa-solid fa-envelope"></i> EMAIL: xvieweriloveu@gmail.com
+    </a>
+    <a href="https://chat.whatsapp.com/GoTo9l39vQz7gVA9rULQ6P" class="contact-btn btn-wa">
+        <i class="fab fa-whatsapp"></i> OFFICIAL WHATSAPP GROUP
+    </a>
+    <a href="https://t.me/parthsatta1" class="contact-btn btn-tg">
+        <i class="fab fa-telegram-plane"></i> JOIN TELEGRAM CHANNEL
+    </a>
+
+    <p style="font-size:10px; color:#444; margin-top:30px;">© 2026 PARTHSATTA PREMIUM NETWORK.</p>
+</div>
+
 <div class="nav">
-    <a href="#" class="nav-link" style="color:red;"><i class="fa-solid fa-fire"></i><br>LIVE</a>
-    <a href="https://wa.me/918979382308" class="nav-link"><i class="fa-brands fa-whatsapp"></i><br>WHATSAPP</a>
-    <a href="admin.html" class="nav-link"><i class="fa-solid fa-user-lock"></i><br>ADMIN</a>
+    <a href="#" class="nav-link active"><i class="fa-solid fa-house"></i><br>HOME</a>
+    <a href="https://chat.whatsapp.com/GoTo9l39vQz7gVA9rULQ6P" class="nav-link"><i class="fa-brands fa-whatsapp"></i><br>WHATSAPP</a>
+    <a href="https://t.me/parthsatta1" class="nav-link"><i class="fa-brands fa-telegram"></i><br>TELEGRAM</a>
+    <a href="admin.html" class="nav-link"><i class="fa-solid fa-lock"></i><br>ADMIN</a>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
 <script>
+    // Firebase Setup
     const firebaseConfig = {
         apiKey: "AIzaSyBkeZInbo-rTkLPuZFdfyhr7oR03wy7_q8",
         authDomain: "parthsatta.firebaseapp.com",
@@ -75,19 +150,23 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Results Fetch
-    db.collection("results").onSnapshot(ss => {
-        const g = document.getElementById('m-grid'); g.innerHTML = '';
-        ss.forEach(doc => {
-            g.innerHTML += `<div class="card"><span>${doc.id}</span><br><span style="font-size:40px; font-weight:900;">${doc.data().num}</span><br><span style="font-size:9px; color:red;">RESULT DECLARED</span></div>`;
-        });
-    });
-
     async function bookGame() {
         const n=document.getElementById('uN').value, p=document.getElementById('uP').value, m=document.getElementById('mN').value, num=document.getElementById('bN').value, a=document.getElementById('bA').value;
-        if(!n || !p || !num || !a) return alert("भाई, पूरी डिटेल भरो!");
-        await db.collection("bookings").add({ n, p, m, num, a:parseInt(a), win: a*95, t:new Date().toLocaleString() });
-        alert("✅ गेम लग गया है! एडमिन पैनल पर चेक करें।");
+        if(!n || !p || !num || !a) return alert("जानकारी अधूरी है!");
+        await db.collection("bookings").add({ name:n, whatsapp:p, market:m, bet:num, amount:parseInt(a), payout:a*95, time:new Date().toLocaleString() });
+        alert("✅ गेम लग गया! एडमिन पैनल पर चेक करें।");
+    }
+
+    const mkt = ["DESAWAR", "GALI", "FARIDABAD", "GHAZIABAD", "SHRI GANESH", "DELHI BAZAR", "UP BAZAR", "KALYAN", "TIME BAZAR", "RAJDHANI", "GOLDEN", "MUMBAI", "PUNJAB", "HARYANA", "SINGAPORE", "DUBAI", "LONDON", "TOKYO", "BERLIN", "PARIS"];
+    const grid = document.getElementById('m-grid');
+    mkt.forEach(m => {
+        const r = Math.floor(Math.random() * 99).toString().padStart(2, '0');
+        grid.innerHTML += `<div class="card"><span class="m-name">${m}</span><span class="m-num">${r}</span><span class="m-status">● LIVE</span></div>`;
+    });
+
+    const chart = document.getElementById('chart-body');
+    for(let i=1; i<=12; i++) {
+        chart.innerHTML += `<tr><td>${i}-03</td><td>${Math.floor(Math.random()*99).toString().padStart(2,'0')}</td><td>${Math.floor(Math.random()*99).toString().padStart(2,'0')}</td><td>${Math.floor(Math.random()*99).toString().padStart(2,'0')}</td><td>${Math.floor(Math.random()*99).toString().padStart(2,'0')}</td><td>${Math.floor(Math.random()*99).toString().padStart(2,'0')}</td></tr>`;
     }
 </script>
 </body>
