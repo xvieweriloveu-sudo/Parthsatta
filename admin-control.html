@@ -2,184 +2,91 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MASTER ANALYTICS | SECURE LOGIN</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ADMIN | PARTHSATTA CONTROL PANEL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --red: #ff3131; --bg: #050505; --card: #111; --gold: #ffd700; --green: #39ff14; }
-        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        :root { --red: #ff3131; --gold: #ffd700; --bg: #000; --card: #111; --green: #25d366; --blue: #0088cc; }
+        body { background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 100px; overflow-x: hidden; }
+        .hero { text-align: center; padding: 30px 10px; background: radial-gradient(circle, #300 0%, #000 100%); border-bottom: 2px solid var(--red); }
+        .logo { font-size: 38px; font-weight: 900; letter-spacing: 5px; text-shadow: 0 0 20px var(--red); margin: 0; color: #fff; }
+        .sub-logo { color: var(--gold); font-size: 12px; font-weight: bold; letter-spacing: 1px; }
+        .live-label { color: var(--red); font-weight: 900; padding-left: 15px; margin-top: 20px; display: flex; align-items: center; }
         
-        /* Secure Auth Overlay */
-        #auth-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; justify-content: center; align-items: center; }
-        .auth-box { background: #111; padding: 30px; border: 1px solid var(--red); border-radius: 15px; width: 320px; text-align: center; }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: #fff; border-radius: 8px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 12px; background: var(--red); border: none; color: #fff; font-weight: bold; cursor: pointer; border-radius: 8px; }
+        /* Market Grid */
+        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; }
+        .m-card { background: var(--card); border: 1px solid #222; border-radius: 12px; padding: 15px; text-align: center; border-left: 4px solid var(--red); position: relative; }
+        .m-name { color: var(--gold); font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 5px; }
+        .m-num { font-size: 32px; font-weight: 900; color: #fff; text-shadow: 0 0 10px var(--red); margin-bottom: 10px; }
         
-        /* Dashboard Layout */
-        #dashboard { display: none; padding: 15px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .stat-card { background: var(--card); padding: 15px; border-radius: 12px; border-left: 4px solid var(--red); }
-        .main-box { background: var(--card); border-radius: 15px; padding: 15px; border: 1px solid #222; margin-top: 20px; }
-        
-        /* Tables & Lists */
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
-        .data-table th, .data-table td { padding: 10px; border: 1px solid #222; text-align: left; }
-        .tag-harup { background: var(--gold); color: #000; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
-        .tag-single { background: var(--red); color: #fff; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
-        
-        .status-live { color: var(--green); font-size: 10px; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
+        /* Update Inputs */
+        .admin-input { width: 80%; padding: 8px; background: #222; border: 1px solid #444; color: #fff; border-radius: 5px; text-align: center; font-weight: bold; margin-bottom: 8px; font-size: 16px; }
+        .upd-btn { width: 100%; background: var(--red); color: #fff; border: none; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: 900; font-size: 12px; transition: 0.3s; }
+        .upd-btn:active { transform: scale(0.95); background: #b30000; }
+
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #000; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; z-index: 1000; }
+        .nav-item { text-align: center; color: #555; text-decoration: none; font-size: 10px; font-weight: bold; }
+        .nav-item.active { color: var(--red); }
     </style>
 </head>
 <body>
 
-<div id="auth-screen">
-    <div class="auth-box" id="login-box">
-        <h2 style="color:var(--red)">PARTH ADMIN</h2>
-        <input type="email" id="email" placeholder="xvieweriloveu@gmail.com">
-        <input type="password" id="pass" placeholder="Password">
-        <button class="btn" onclick="sendOTP()">SEND OTP TO GMAIL</button>
-        <p style="font-size:10px; color:#555; margin-top:10px; cursor:pointer;" onclick="resetPass()">Forgot Password? (Reset Link)</p>
-    </div>
-    <div class="auth-box" id="otp-box" style="display:none;">
-        <h2 style="color:var(--gold)">VERIFY OTP</h2>
-        <input type="number" id="otpInput" placeholder="Enter 6-Digit OTP">
-        <button class="btn" style="background:var(--gold); color:#000;" onclick="verifyAndEnter()">VERIFY & ACCESS</button>
-    </div>
+<div class="hero">
+    <h1 class="logo">ADMIN PANEL</h1>
+    <div class="sub-logo">PARTHSATTA REAL-TIME CONTROLLER</div>
 </div>
 
-<div id="dashboard">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2 style="margin:0; color:var(--red);">MASTER ANALYTICS</h2>
-        <span class="status-live">● LIVE DATABASE</span>
-    </div>
+<div class="live-label"><i class="fas fa-edit"></i> UPDATE MARKET NUMBERS</div>
+<div class="market-grid" id="marketDisplay"></div>
 
-    <div class="grid">
-        <div class="stat-card">
-            <div style="font-size:10px; color:#888;">TOTAL COLLECTION</div>
-            <div id="totalCol" style="font-size:20px; font-weight:900; color:var(--green);">₹0</div>
-        </div>
-        <div class="stat-card" style="border-left-color: var(--gold);">
-            <div style="font-size:10px; color:#888;">ACTIVE USERS</div>
-            <div id="activeCount" style="font-size:20px; font-weight:900; color:var(--gold);">0</div>
-        </div>
-    </div>
+<nav class="bottom-nav">
+    <a href="#" class="nav-item active"><i class="fas fa-lock"></i>ADMIN HOME</a>
+    <a href="index.html" class="nav-item"><i class="fas fa-eye"></i>VIEW SITE</a>
+</nav>
 
-    <div class="main-box">
-        <h3><i class="fas fa-wallet" style="color:var(--gold)"></i> WALLET DEPOSITS (CASH-IN)</h3>
-        <table class="data-table">
-            <thead><tr><th>User</th><th>Number</th><th>Amount</th><th>Status</th></tr></thead>
-            <tbody id="walletData"></tbody>
-        </table>
-    </div>
-
-    <div class="main-box">
-        <h3><i class="fas fa-dice" style="color:var(--red)"></i> LIVE BETTING (SINGLE & HARUP)</h3>
-        <table class="data-table">
-            <thead><tr><th>Name</th><th>Market</th><th>Type</th><th>No.</th><th>Amount</th></tr></thead>
-            <tbody id="betData"></tbody>
-        </table>
-    </div>
-
-    <div class="main-box">
-        <h3><i class="fas fa-chart-line"></i> COLLECTION TREND (7 DAYS)</h3>
-        <canvas id="collectionChart" height="150"></canvas>
-    </div>
-</div>
-
-<audio id="ring" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
 <script>
-    // Firebase Config
     const firebaseConfig = { apiKey: "AIzaSyBkeZInbo-rTkLPuZFdfyhr7oR03wy7_q8", projectId: "parthsatta", appId: "1:975713705925:web:fe0ff21f439e47f484b5ac" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    const auth = firebase.auth();
 
-    // 1. Professional Login System
-    function sendOTP() {
-        const e = document.getElementById('email').value;
-        const p = document.getElementById('pass').value;
-        // NOTE: Real OTP requires a backend, yahan hum fixed password/OTP rakhenge jab tak aap server link nahi karte
-        if(e === "xvieweriloveu@gmail.com" && p === "MASTER786") {
-            alert("OTP has been sent to your Gmail!");
-            document.getElementById('login-box').style.display = 'none';
-            document.getElementById('otp-box').style.display = 'block';
-        } else { alert("Invalid Credentials!"); }
-    }
+    const markets = ["Desawar", "Gali", "Faridabad", "Ghaziabad", "Shri Ganesh", "Delhi Bazar", "UP Bazar", "Kalyan", "Main Bazar", "Taj", "New Faridabad", "Old Delhi", "Satta Express", "Punjab Special", "Milan Day", "Time Bazar", "Rajdhani", "Taj Gold", "Gali Gold", "Dubai Bazar"];
+    const grid = document.getElementById('marketDisplay');
 
-    function verifyAndEnter() {
-        if(document.getElementById('otpInput').value === "123456") {
-            document.getElementById('auth-screen').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-            startLiveTracking();
-        } else { alert("Wrong OTP!"); }
-    }
+    // UI Setup
+    markets.forEach(m => {
+        const mId = m.replace(/\s/g, '');
+        grid.innerHTML += `
+            <div class="m-card">
+                <div class="m-name">${m}</div>
+                <div class="m-num" id="${mId}">--</div>
+                <input type="number" id="in-${mId}" class="admin-input" placeholder="00-99">
+                <button class="upd-btn" onclick="updateNum('${mId}')">UPDATE</button>
+            </div>`;
+    });
 
-    function resetPass() {
-        const email = document.getElementById('email').value;
-        if(!email) return alert("Pehle Email likho!");
-        auth.sendPasswordResetEmail(email).then(() => alert("Reset Link Sent to Gmail!")).catch(err => alert(err.message));
-    }
+    // Real-time Number Sync (Admin panel pe bhi dikhega current kya hai)
+    db.collection("results").onSnapshot(snap => { 
+        snap.forEach(doc => { 
+            let el = document.getElementById(doc.id); 
+            if(el) el.innerText = doc.data().num; 
+        }); 
+    });
 
-    // 2. Real-Time Data Tracking
-    function startLiveTracking() {
-        // Betting Data (Single/Harup Details)
-        db.collection("bets").orderBy("time", "desc").onSnapshot(snap => {
-            let html = "";
-            let total = 0;
-            if(!snap.empty) document.getElementById('ring').play(); // RING ON NEW BET
+    // Function to Update Number in Firebase
+    async function updateNum(id) {
+        const val = document.getElementById('in-' + id).value;
+        if(val === "" || val.length > 2) return alert("Sahi number daalein (00-99)!");
 
-            snap.forEach(doc => {
-                const b = doc.data();
-                total += Number(b.amount);
-                const typeTag = b.num.length > 1 ? '<span class="tag-single">Single</span>' : '<span class="tag-harup">Harup</span>';
-                html += `<tr>
-                            <td>${b.name}</td>
-                            <td>${b.market}</td>
-                            <td>${typeTag}</td>
-                            <td style="font-weight:bold;">${b.num}</td>
-                            <td style="color:var(--red)">₹${b.amount}</td>
-                         </tr>`;
-            });
-            document.getElementById('betData').innerHTML = html;
-            document.getElementById('totalCol').innerText = "₹" + total.toLocaleString();
-        });
-
-        // Wallet Deposits
-        db.collection("wallet").orderBy("time", "desc").onSnapshot(snap => {
-            let html = "";
-            snap.forEach(doc => {
-                const w = doc.data();
-                html += `<tr>
-                            <td>${w.userName}</td>
-                            <td>${w.phone}</td>
-                            <td style="color:var(--green)">+₹${w.amount}</td>
-                            <td style="font-size:9px;">SUCCESS</td>
-                         </tr>`;
-            });
-            document.getElementById('walletData').innerHTML = html;
-        });
-
-        // Active Users
-        db.collection("stats").doc("live").onSnapshot(doc => {
-            if(doc.exists) document.getElementById('activeCount').innerText = doc.data().count;
-        });
-
-        // Chart Init
-        const ctx = document.getElementById('collectionChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                datasets: [{ label: 'Flow', data: [10000, 45000, 32000, 89000, 145000, 110000, 180000], borderColor: '#ff3131', fill: true, backgroundColor: 'rgba(255, 49, 49, 0.1)' }]
-            },
-            options: { plugins: { legend: { display: false } } }
-        });
+        try {
+            await db.collection("results").doc(id).set({ num: val }, { merge: true });
+            alert("✅ Number Updated!");
+            document.getElementById('in-' + id).value = ""; // Input clear
+        } catch (e) {
+            alert("Error! Firebase rules check karein.");
+        }
     }
 </script>
 </body>
